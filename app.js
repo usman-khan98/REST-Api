@@ -2,8 +2,7 @@ const mongoose = require('mongoose');
 const express = require('express');
 const ejs = require('ejs');
 const app = express()
-// this project is REST Api
-// use POSTMAN to send requests
+
 
 app.use(express.static(__dirname + '/public'));
 
@@ -20,9 +19,6 @@ const articleSchema = {
 
 const Article = mongoose.model("Article", articleSchema);
 
-// all get, post, delete targeting the same /articles route//
-// use . for chaining//
-// semi colon important in last while chaining //
 app.route("/articles")
     .get(function(req, res){
       Article.find({}, function(err, result){
@@ -57,8 +53,6 @@ app.route("/articles")
     });
 
 
-///////////// targeting specific articles ///////////////
-
 app.route("/articles/:articleName")
 .get(function(req, res){
   const articleTitle = req.params.articleName;
@@ -86,7 +80,7 @@ app.route("/articles/:articleName")
 .patch(function(req, res){
   Article.findOneAndUpdate(
     {title: req.params.articleName},
-    {$set: req.body},   //body parser will automatically determine if title or content was changed in request
+    {$set: req.body},   
     function(err, result){
       if (err) {
         res.send("Error occured")
